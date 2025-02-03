@@ -13,13 +13,12 @@ import InternalDashboard from "./components/InternalDashboard";
 
 function AppContent() {
   const dispatch = useAppDispatch();
-
+  console.log(localStorage.getItem("token"));
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch(fetchCurrentUser());
     }
   }, [dispatch]);
-
   return (
     <Router>
       <Toaster position="top-right" />
