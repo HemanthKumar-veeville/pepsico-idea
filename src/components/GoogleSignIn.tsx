@@ -61,7 +61,11 @@ const GoogleSignIn = () => {
     if (isAuthenticated && user) {
       const hasDepartments =
         Array.isArray(user.department_ids) && user.department_ids.length > 0;
-      navigate(hasDepartments ? "/internal-dashboard" : "/dashboard");
+      navigate(
+        hasDepartments || user.role === "Admin"
+          ? "/internal-dashboard"
+          : "/dashboard"
+      );
     }
   }, [isAuthenticated, user, navigate]);
 

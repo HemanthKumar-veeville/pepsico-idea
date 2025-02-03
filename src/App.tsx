@@ -9,6 +9,7 @@ import GoogleSignIn from "./components/GoogleSignIn";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
 import InternalDashboard from "./components/InternalDashboard";
+import AdminRoute from "./components/AdminRoute";
 // Import your Dashboard component here
 
 function AppContent() {
@@ -40,7 +41,9 @@ function AppContent() {
           path="/internal-dashboard"
           element={
             <PrivateRoute>
-              <InternalDashboard />
+              <AdminRoute>
+                <InternalDashboard />
+              </AdminRoute>
             </PrivateRoute>
           }
         />

@@ -1,6 +1,7 @@
 import { useAppSelector } from "../store/hooks";
 import { useEffect, useState, useMemo } from "react";
 import axiosInstance from "../api/axios";
+import { Link } from "react-router-dom";
 
 interface Idea {
   id: string;
@@ -97,6 +98,11 @@ const InternalDashboard = () => {
     });
   };
 
+  // Add this function to check if user has admin access
+  const hasAdminAccess = useMemo(() => {
+    return user?.role === "Admin" || user?.role === "CEO";
+  }, [user?.role]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-10">
@@ -140,6 +146,57 @@ const InternalDashboard = () => {
             </div>
           </div>
         </header>
+
+        {/* Add Admin Navigation if user has admin access */}
+        {hasAdminAccess && (
+          <nav className="bg-white backdrop-blur-lg rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Admin Controls
+              </h2>
+              <div className="flex space-x-4">
+                <Link
+                  to="/admin/users"
+                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  <svg
+                    className="-ml-1 mr-2 h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
+                  </svg>
+                  Manage Users
+                </Link>
+                <Link
+                  to="/admin/departments"
+                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  <svg
+                    className="-ml-1 mr-2 h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    />
+                  </svg>
+                  Manage Departments
+                </Link>
+              </div>
+            </div>
+          </nav>
+        )}
 
         {/* Main Content */}
         <main className="bg-white backdrop-blur-lg rounded-2xl shadow-sm border border-gray-100 p-8">
