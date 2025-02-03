@@ -2,17 +2,6 @@ import { useAppSelector } from "../store/hooks";
 import { useEffect, useState, useMemo } from "react";
 import axiosInstance from "../api/axios";
 
-interface Department {
-  id: string;
-  name: string;
-}
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
-
 interface Idea {
   id: string;
   user_id: string;
