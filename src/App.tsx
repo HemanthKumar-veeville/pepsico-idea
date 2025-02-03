@@ -3,7 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { useEffect } from "react";
 import { store } from "./store/store";
-import { useAppDispatch } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { fetchCurrentUser } from "./store/slices/authSlice";
 import GoogleSignIn from "./components/GoogleSignIn";
 import PrivateRoute from "./components/PrivateRoute";
@@ -13,12 +13,16 @@ import InternalDashboard from "./components/InternalDashboard";
 
 function AppContent() {
   const dispatch = useAppDispatch();
-  console.log(localStorage.getItem("token"));
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    // Only fetch user data if we have a token and are not already authenticated
+    const token = localStorage.getItem("token");
+    if (token && !isAuthenticated) {
       dispatch(fetchCurrentUser());
     }
-  }, [dispatch]);
+  }, [dispatch, isAuthenticated]);
+
   return (
     <Router>
       <Toaster position="top-right" />
