@@ -1,5 +1,3 @@
-import { FileType } from "./types";
-
 export const FileIcons = {
   PDF: (
     <svg
