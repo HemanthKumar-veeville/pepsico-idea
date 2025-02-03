@@ -4,7 +4,11 @@ const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
     "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "access-control-allow-credentials": true,
+    "ngrok-skip-browser-warning": "69420",
   },
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use((config) => {
